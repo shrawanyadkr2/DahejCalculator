@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Footer from "./Components/Footer";
+import Footer from "./Component/Footer";
 import {
   Container,
   Grid,
@@ -31,7 +31,7 @@ const App = () => {
   const [dahejAmount, setDahejAmount] = useState(null);
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    AOS.init({ duration: 1200 });
   }, []);
 
   const handleChange = (e) => {
@@ -42,16 +42,16 @@ const App = () => {
   const calculateDahej = () => {
     let amount = 50000;
     const salary = parseInt(form.salary) || 0;
-    amount += salary * 12 * 0.1;
+    amount += salary * 12 * 0.5;
 
     const expenses = parseInt(form.expenses) || 0;
-    amount += expenses * 0.1;
+    amount += expenses * 0.7;
 
     if (form.maritalStatus === "Divorced") amount -= 50000;
-    if (form.homeOwnership === "Owned") amount += 30000;
-    if (form.carOwnership === "Yes") amount += 20000;
-    if (form.location === "Rural") amount -= 20000;
-    if (form.location === "Outside") amount += 100000;
+    if (form.homeOwnership === "Owned") amount += 100000;
+    if (form.carOwnership === "Yes") amount += 100000;
+    if (form.location === "Rural") amount -= 30000;
+    if (form.location === "Outside") amount += 200000;
 
     setDahejAmount(amount);
   };
@@ -59,120 +59,174 @@ const App = () => {
   return (
     <>
       <div>
-      <Container maxWidth="sm" style={{ marginTop: "40px" }}>
-      <Typography variant="h4" align="center" color="purple" gutterBottom data-aos="fade-down">
-        Dahej Calculator
-      </Typography>
-      <Typography variant="h6" align="center" color="textSecondary" data-aos="fade-up">
-        How Much Dowry Should You Ask For?
-      </Typography>
 
-      <Card style={{ marginTop: "30px" }} data-aos="fade-right">
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Age"
-                name="age"
-                value={form.age}
-                onChange={handleChange}
-                type="number"
-              />
-            </Grid>
+        <Container maxWidth="sm" style={{ marginTop: "50px", marginBottom: "50px" }}>
+          <Typography
+            variant="h3"
+            align="center"
+            sx={{ fontWeight: "bold", color: "#6a1b9a" }}
+            gutterBottom
+            data-aos="zoom-in"
+          >
+            💍 Dahej Calculator
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+            sx={{ mb: 4 }}
+            data-aos="fade-up"
+          >
+            Find out your 'hypothetical' dowry value today! 🚀
+          </Typography>
 
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Monthly Salary (₹)"
-                name="salary"
-                value={form.salary}
-                onChange={handleChange}
-                type="number"
-              />
-            </Grid>
+          <Card
+            elevation={6}
+            sx={{
+              borderRadius: 4,
+              padding: 3,
+              backgroundColor: "#fafafa",
+            }}
+            data-aos="fade-right"
+          >
+            <CardContent>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Age"
+                    name="age"
+                    value={form.age}
+                    onChange={handleChange}
+                    type="number"
+                    variant="outlined"
+                  />
+                </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Education Expenses (₹)"
-                name="expenses"
-                value={form.expenses}
-                onChange={handleChange}
-                type="number"
-              />
-            </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Monthly Salary (₹)"
+                    name="salary"
+                    value={form.salary}
+                    onChange={handleChange}
+                    type="number"
+                    variant="outlined"
+                  />
+                </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="subtitle1">Marital Status</Typography>
-              <RadioGroup row name="maritalStatus" value={form.maritalStatus} onChange={handleChange}>
-                <FormControlLabel value="Single" control={<Radio />} label="Single" />
-                <FormControlLabel value="Married" control={<Radio />} label="Married" />
-                <FormControlLabel value="Divorced" control={<Radio />} label="Divorced" />
-              </RadioGroup>
-            </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Education Expenses (₹)"
+                    name="expenses"
+                    value={form.expenses}
+                    onChange={handleChange}
+                    type="number"
+                    variant="outlined"
+                  />
+                </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="subtitle1">Home Ownership</Typography>
-              <RadioGroup row name="homeOwnership" value={form.homeOwnership} onChange={handleChange}>
-                <FormControlLabel value="Owned" control={<Radio />} label="Owned" />
-                <FormControlLabel value="Rented" control={<Radio />} label="Rented" />
-              </RadioGroup>
-            </Grid>
+                {/* Radio Groups */}
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Marital Status</Typography>
+                  <RadioGroup row name="maritalStatus" value={form.maritalStatus} onChange={handleChange}>
+                    <FormControlLabel value="Single" control={<Radio />} label="Single" />
+                    <FormControlLabel value="Married" control={<Radio />} label="Married" />
+                    <FormControlLabel value="Divorced" control={<Radio />} label="Divorced" />
+                  </RadioGroup>
+                </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="subtitle1">Car Ownership</Typography>
-              <RadioGroup row name="carOwnership" value={form.carOwnership} onChange={handleChange}>
-                <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="No" control={<Radio />} label="No" />
-              </RadioGroup>
-            </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Home Ownership</Typography>
+                  <RadioGroup row name="homeOwnership" value={form.homeOwnership} onChange={handleChange}>
+                    <FormControlLabel value="Owned" control={<Radio />} label="Owned" />
+                    <FormControlLabel value="Rented" control={<Radio />} label="Rented" />
+                  </RadioGroup>
+                </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="subtitle1">Location</Typography>
-              <RadioGroup row name="location" value={form.location} onChange={handleChange}>
-                <FormControlLabel value="Urban" control={<Radio />} label="India - Urban" />
-                <FormControlLabel value="Rural" control={<Radio />} label="India - Rural" />
-                <FormControlLabel value="Outside" control={<Radio />} label="Outside India" />
-              </RadioGroup>
-            </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Car Ownership</Typography>
+                  <RadioGroup row name="carOwnership" value={form.carOwnership} onChange={handleChange}>
+                    <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+                    <FormControlLabel value="No" control={<Radio />} label="No" />
+                  </RadioGroup>
+                </Grid>
 
-            <Grid item xs={12}>
-              <Button variant="contained" color="warning" fullWidth onClick={calculateDahej}>
-                Calculate
-              </Button>
-            </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Location</Typography>
+                  <RadioGroup row name="location" value={form.location} onChange={handleChange}>
+                    <FormControlLabel value="Urban" control={<Radio />} label="Urban India" />
+                    <FormControlLabel value="Rural" control={<Radio />} label="Rural India" />
+                    <FormControlLabel value="Outside" control={<Radio />} label="Outside India" />
+                  </RadioGroup>
+                </Grid>
 
-            {dahejAmount !== null && (
-              <Grid item xs={12} data-aos="fade-up">
-                <Typography variant="h5" align="center" color="orange" style={{ marginTop: "20px" }}>
-                  Estimated Dowry Amount: ₹{dahejAmount.toLocaleString()}
-                </Typography>
-                <Typography variant="caption" display="block" align="center" color="textSecondary">
-                  Note: This is a satirical calculator. Dowry is illegal under the Dowry Prohibition Act, 1961.
-                </Typography>
+                {/* Calculate Button */}
+                <Grid item xs={12}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    sx={{
+                      backgroundColor: "#ff9800",
+                      ":hover": {
+                        backgroundColor: "#fb8c00",
+                      },
+                      fontWeight: "bold",
+                      borderRadius: 2,
+                    }}
+                    onClick={calculateDahej}
+                  >
+                    Calculate Now 🚀
+                  </Button>
+                </Grid>
+
+                {/* Result */}
+                {dahejAmount !== null && (
+                  <Grid item xs={12} data-aos="fade-up">
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      sx={{ mt: 3, mb: 1, color: "#d32f2f", fontWeight: "bold" }}
+                    >
+                      Estimated Dowry: ₹{dahejAmount.toLocaleString()}
+                    </Typography>
+                    <Typography variant="caption" display="block" align="center" color="text.secondary">
+                      *Disclaimer: Dowry is illegal under the Dowry Prohibition Act, 1961.
+                    </Typography>
+                  </Grid>
+                )}
               </Grid>
-            )}
-          </Grid>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
 
-      <Card style={{ marginTop: "20px", marginBottom: "40px" }} data-aos="fade-left">
-        <CardContent>
-          <Typography variant="h6" gutterBottom>Did You Know?</Typography>
-          <ul>
-            <li>Dowry Prohibition Act was passed in India in 1961.</li>
-            <li>Despite being illegal, dowry still persists in some areas.</li>
-            <li>Organizations work to educate against dowry practices.</li>
-            <li>Modern marriages focus on mutual respect.</li>
-          </ul>
-        </CardContent>
-      </Card>
-    </Container>
-    <Footer/>
-
-
+          {/* Fun Facts */}
+          <Card
+            elevation={4}
+            sx={{
+              mt: 4,
+              borderRadius: 4,
+              padding: 3,
+              backgroundColor: "#e3f2fd",
+            }}
+            data-aos="fade-left"
+          >
+            <CardContent>
+              <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
+                📚 Did You Know?
+              </Typography>
+              <ul style={{ paddingLeft: "20px" }}>
+                <li>Dowry Prohibition Act was enforced in 1961 in India.</li>
+                <li>Many NGOs and groups work to end dowry practices.</li>
+                <li>Marriage today is based on love and equality ❤️.</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </Container>
       </div>
+
+      <Footer/>
 
     </>
   );
