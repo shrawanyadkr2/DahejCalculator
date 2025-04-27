@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Footer from "./Component/Footer";
+import Footer from "./Components/Footer";
 import {
   Container,
   Grid,
