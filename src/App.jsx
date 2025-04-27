@@ -8,11 +8,14 @@ import {
   Card,
   CardContent,
   Typography,
-  MenuItem,
   RadioGroup,
   FormControlLabel,
   Radio,
   Box,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -26,6 +29,11 @@ const App = () => {
     homeOwnership: "Owned",
     carOwnership: "Yes",
     location: "Urban",
+    jobType: "Private",
+    degree: "B.A",
+    land: "",
+    caste: "",
+    bhaisiya: "",
   });
 
   const [dahejAmount, setDahejAmount] = useState(null);
@@ -53,13 +61,26 @@ const App = () => {
     if (form.location === "Rural") amount -= 30000;
     if (form.location === "Outside") amount += 200000;
 
+    // New conditions
+    if (form.jobType === "Government") amount += 300000;
+    if (["B.Tech", "B.Pharma"].includes(form.degree)) amount += 150000;
+    if (["BCA", "B.Com"].includes(form.degree)) amount += 100000;
+    if (form.degree === "B.A") amount += 50000;
+
+    const land = parseInt(form.land) || 0;
+    amount += land * 20000; // 20k ₹ per bigha
+
+    if (form.caste === "Yadav") {
+      const bhaisiya = parseInt(form.bhaisiya) || 0;
+      amount += bhaisiya * 15000; // 15k ₹ per bhaisiya
+    }
+
     setDahejAmount(amount);
   };
 
   return (
     <>
       <div>
-
         <Container maxWidth="sm" style={{ marginTop: "50px", marginBottom: "50px" }}>
           <Typography
             variant="h3"
@@ -91,6 +112,7 @@ const App = () => {
           >
             <CardContent>
               <Grid container spacing={3}>
+                {/* Age, Salary, Expenses */}
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
@@ -127,7 +149,7 @@ const App = () => {
                   />
                 </Grid>
 
-                {/* Radio Groups */}
+                {/* Marital Status */}
                 <Grid item xs={12}>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Marital Status</Typography>
                   <RadioGroup row name="maritalStatus" value={form.maritalStatus} onChange={handleChange}>
@@ -137,6 +159,7 @@ const App = () => {
                   </RadioGroup>
                 </Grid>
 
+                {/* Home Ownership */}
                 <Grid item xs={12}>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Home Ownership</Typography>
                   <RadioGroup row name="homeOwnership" value={form.homeOwnership} onChange={handleChange}>
@@ -145,6 +168,7 @@ const App = () => {
                   </RadioGroup>
                 </Grid>
 
+                {/* Car Ownership */}
                 <Grid item xs={12}>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Car Ownership</Typography>
                   <RadioGroup row name="carOwnership" value={form.carOwnership} onChange={handleChange}>
@@ -153,6 +177,7 @@ const App = () => {
                   </RadioGroup>
                 </Grid>
 
+                {/* Location */}
                 <Grid item xs={12}>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>Location</Typography>
                   <RadioGroup row name="location" value={form.location} onChange={handleChange}>
@@ -161,6 +186,71 @@ const App = () => {
                     <FormControlLabel value="Outside" control={<Radio />} label="Outside India" />
                   </RadioGroup>
                 </Grid>
+
+                {/* Job Type */}
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel>Job Type</InputLabel>
+                    <Select name="jobType" value={form.jobType} onChange={handleChange} label="Job Type">
+                      <MenuItem value="Government">Government</MenuItem>
+                      <MenuItem value="Private">Private</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Degree */}
+                <Grid item xs={12}>
+                  <FormControl fullWidth>
+                    <InputLabel>Graduation Degree</InputLabel>
+                    <Select name="degree" value={form.degree} onChange={handleChange} label="Graduation Degree">
+                      <MenuItem value="B.A">B.A</MenuItem>
+                      <MenuItem value="B.Com">B.Com</MenuItem>
+                      <MenuItem value="BCA">BCA</MenuItem>
+                      <MenuItem value="B.Tech">B.Tech</MenuItem>
+                      <MenuItem value="B.Pharma">B.Pharma</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                {/* Land */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Father's Land (in Bigha)"
+                    name="land"
+                    value={form.land}
+                    onChange={handleChange}
+                    type="number"
+                    variant="outlined"
+                  />
+                </Grid>
+
+                {/* Caste */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Caste"
+                    name="caste"
+                    value={form.caste}
+                    onChange={handleChange}
+                    variant="outlined"
+                  />
+                </Grid>
+
+                {/* Bhaisiya - only show if caste is Yadav */}
+                {form.caste.toLowerCase() === "yadav" && (
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Number of Bhaisiya (Buffaloes)"
+                      name="bhaisiya"
+                      value={form.bhaisiya}
+                      onChange={handleChange}
+                      type="number"
+                      variant="outlined"
+                    />
+                  </Grid>
+                )}
 
                 {/* Calculate Button */}
                 <Grid item xs={12}>
@@ -217,7 +307,6 @@ const App = () => {
                 📚 Did You Know?
               </Typography>
               <ul style={{ paddingLeft: "20px" }}>
-                <li>tu bhdwa hai bsdi ke qki dhej le rha<li/>
                 <li>Dowry Prohibition Act was enforced in 1961 in India.</li>
                 <li>Many NGOs and groups work to end dowry practices.</li>
                 <li>Marriage today is based on love and equality ❤️.</li>
@@ -227,8 +316,7 @@ const App = () => {
         </Container>
       </div>
 
-      <Footer/>
-
+      <Footer />
     </>
   );
 };
