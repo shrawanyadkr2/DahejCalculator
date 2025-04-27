@@ -217,6 +217,7 @@ const App = () => {
                 📚 Did You Know?
               </Typography>
               <ul style={{ paddingLeft: "20px" }}>
+                <li>tu bhdwa hai bsdi ke qki dhej le rha<li/>
                 <li>Dowry Prohibition Act was enforced in 1961 in India.</li>
                 <li>Many NGOs and groups work to end dowry practices.</li>
                 <li>Marriage today is based on love and equality ❤️.</li>
