@@ -50,29 +50,30 @@ const App = () => {
   const calculateDahej = () => {
     let amount = 50000;
     const salary = parseInt(form.salary) || 0;
-    amount += salary * 12 * 0.5;
+    amount += salary * 12 * 1;
 
     const expenses = parseInt(form.expenses) || 0;
-    amount += expenses * 0.7;
+    amount += expenses * 0.9;
 
-    if (form.maritalStatus === "Divorced") amount -= 50000;
-    if (form.homeOwnership === "Owned") amount += 100000;
-    if (form.carOwnership === "Yes") amount += 100000;
+    if (form.maritalStatus === "Divorced") amount -= 500000;
+    if (form.homeOwnership === "Owned") amount += 300000;
+    if (form.carOwnership === "Yes") amount += 300000;
     if (form.location === "Rural") amount -= 30000;
-    if (form.location === "Outside") amount += 200000;
+    if (form.location === "Outside") amount += 300000;
 
     // New conditions
     if (form.jobType === "Government") amount += 300000;
-    if (["B.Tech", "B.Pharma"].includes(form.degree)) amount += 150000;
-    if (["BCA", "B.Com"].includes(form.degree)) amount += 100000;
-    if (form.degree === "B.A") amount += 50000;
+    if ([ "B.Pharma"].includes(form.degree)) amount += 150000;
+    if (["B.Tech"].includes(form.degree)) amount += 350000;
+    if (["BCA", "B.Com"].includes(form.degree)) amount += 200000;
+    if (form.degree === "B.A") amount += 150000;
 
     const land = parseInt(form.land) || 0;
-    amount += land * 20000; // 20k ₹ per bigha
+    amount += land * 70000; // 20k ₹ per bigha
 
     if (form.caste === "Yadav") {
       const bhaisiya = parseInt(form.bhaisiya) || 0;
-      amount += bhaisiya * 15000; // 15k ₹ per bhaisiya
+      amount += bhaisiya * 50000; // 15k ₹ per bhaisiya
     }
 
     setDahejAmount(amount);
